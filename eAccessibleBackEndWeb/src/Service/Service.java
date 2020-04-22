@@ -39,7 +39,7 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					Integer codiLocal = local.getCodiLocal();
+					Integer codiLocal = generateId();
 					Integer coditipoLocal= local.getCoditipoLocal();
 					Integer codicarrer=local.getCodiCarrer();
 					String nomCarrer= local.getNomCarrer().toUpperCase();
@@ -170,7 +170,7 @@ public class Service {
 		
 	}
 	
-	@WebMethod
+	
 	public Integer generateId() throws BasicException {
 		
 		Connection connection = null;
@@ -190,7 +190,7 @@ public class Service {
 					}
 					
 					
-					String query = "select count(codilocal) from eaccessible.local;";
+					String query = "select max(codilocal) AS codilocal from eaccessible.local;";
 					try {
 						Statement state = connection.createStatement();
 						ResultSet res = state.executeQuery(query);
