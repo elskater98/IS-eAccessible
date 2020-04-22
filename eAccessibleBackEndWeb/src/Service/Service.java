@@ -11,6 +11,7 @@ import javax.jws.WebService;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -73,6 +74,65 @@ public class Service {
 		}
 	}
 	
+	@WebMethod
+	public Local getLocal(Integer id) throws BasicException{
+		
+		
+		Connection connection = null;
+		Local local = new Local();
+	
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					
+					String query = "select * from eaccessible.local where codilocal="+id;
+					try {
+						Statement state = connection.createStatement();
+						ResultSet res = state.executeQuery(query);
+						res.next();
+						
+						local.setCodiLocal(res.getInt("codiLocal"));
+						local.setCoditipoLocal(res.getInt("codiTipoLocal"));
+						local.setCodiCarrer(res.getInt("codiCarrer"));
+						local.setNomCarrer(res.getString("nomCarrer"));
+						local.setNomVia(res.getString("nomVia"));
+						local.setNumero(res.getInt("numero"));
+						local.setNomLocal(res.getString("nomLocal"));
+						local.setObservacions(res.getString("observacions"));
+						local.setVerificat(res.getString("verificat"));
+						
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(404, "El local amb identificador "+id+" no existeix.");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return local;
+	}
+	
 	public void checkLocalValues(Local local) throws BasicException {
 		if(local.getNomCarrer().isEmpty()) {
 			throw new BasicException(400, "Nom Carrer: no pot estar buit.");
@@ -109,5 +169,55 @@ public class Service {
 		}*/
 		
 	}
+	
+	@WebMethod
+	public Integer generateId() throws BasicException {
+		
+		Connection connection = null;
+		Integer i=0;
+	
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					
+					String query = "select count(codilocal) from eaccessible.local;";
+					try {
+						Statement state = connection.createStatement();
+						ResultSet res = state.executeQuery(query);
+						res.next();
+						i=res.getInt("codilocal");
+						
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return i+1;
+	}
+	
 
 }
