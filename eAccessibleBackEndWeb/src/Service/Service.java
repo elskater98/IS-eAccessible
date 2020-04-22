@@ -141,7 +141,7 @@ public class Service {
 			}
 			
 		} catch(Exception exception) {
-			throw new BasicException(500, "No s'ha pogut eliminar el local introduit.");
+			throw new BasicException(500, "No s'ha pogut eliminar el local amb el seu codi introduit.");
 		} finally {
 			try {
 				connection.close();
@@ -151,4 +151,46 @@ public class Service {
 		}
 	}
 
+	@WebMethod
+	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
+		Connection connection = null;
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "update eAccessible.local set verificat='S' where codilocal="+codiLocal;
+					
+					try {
+						Statement state = connection.createStatement();
+						state.executeUpdate(query);	
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			throw new BasicException(500, "No s'ha pogut validar el local amb el seu codi introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+	}
+	
+	
 }
