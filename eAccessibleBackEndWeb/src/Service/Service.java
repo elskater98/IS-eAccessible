@@ -50,7 +50,8 @@ public class Service {
 					Integer numero = local.getNumero();
 					String nomLocal= local.getNomLocal().toUpperCase();
 					String observacions = local.getObservacions();
-					String verificat = local.getVerificat();
+					//String verificat = local.getVerificat();
+					String verificat = "N";
 					
 					String query = "insert into eaccessible.local (codilocal,coditipolocal,codicarrer,nomcarrer,nomvia,numero,nomlocal,observacions,verificat) values"
 							+ "('"+codiLocal+"','"+coditipoLocal+"','"+codicarrer+"','"+nomCarrer+"','"+nomVia+"','"+numero+"','"+nomLocal+"','"+observacions+"','"+verificat+"')";
