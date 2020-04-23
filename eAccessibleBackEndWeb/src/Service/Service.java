@@ -178,6 +178,64 @@ public class Service {
 			}
 		}
 	}
+	
+	@WebMethod
+	public void UpdateLocal(Local local) throws Exception,BasicException {
+		
+		Connection connection = null;
+		UtilService us = new UtilService();
+		us.checkLocalValues(local);
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+				
+					Integer codiLocal = local.getCodiLocal();
+					Integer coditipoLocal= local.getCoditipoLocal();
+					Integer codicarrer=local.getCodiCarrer();
+					String nomCarrer= local.getNomCarrer().toUpperCase();
+					String nomVia= local.getNomVia().toUpperCase();
+					Integer numero = local.getNumero();
+					String nomLocal= local.getNomLocal().toUpperCase();
+					String observacions = local.getObservacions();
+					String verificat = local.getVerificat();
+					
+					String query = "UPDATE eaccessible.local SET coditipolocal='"+coditipoLocal+"',codicarrer='"+codicarrer+"',nomcarrer='"+nomCarrer+"',"
+							+ "nomvia='"+nomVia+"',numero='"+numero+"' ,nomlocal='"+nomLocal+"' ,observacions='"+observacions+"',verificat='"+verificat+"'  where codilocal="+codiLocal;	
+					
+					
+					try {
+						Statement state = connection.createStatement();
+						state.executeUpdate(query);	
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(500, "S'ha produit un error en la Base de dades.");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+	}
+	
 
 	@WebMethod
 	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
