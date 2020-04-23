@@ -336,5 +336,50 @@ public class Service {
 		return locals;
 	}
 	
+	@WebMethod
+	public Integer getTipusLocalByLocalName(String localName) throws Exception, BasicException {
+		Connection connection = null;
+		Integer codiTipusLocal = 0;
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "select coditipolocal from eAccessible.local where nomlocal LIKE UPPER('%"+localName+"%')";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							codiTipusLocal = rs.getInt("coditipolocal");
+						}
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return codiTipusLocal;
+	}
 	
 }
