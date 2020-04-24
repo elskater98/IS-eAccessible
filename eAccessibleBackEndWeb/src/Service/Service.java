@@ -297,14 +297,14 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					Integer codiAccessibilitat =accessibilitat.getCodiAccessibilitat();
+					Integer codiAccessibilitat =us.generateIdAccessibilitat();
 					Integer codiLocal = accessibilitat.getCodiLocal();
 					Integer codiCaracteristica = accessibilitat.getCodiCaracterisitca();
 					Integer valor = accessibilitat.getValor();
 					String verificat = accessibilitat.getVerificat();
 
 					
-					String query="INSERT INTO eaccessible.accessibilitat (codiaccessibilitat, codilocal, codicaracteristica, valor, verificat) VALUES ("+codiAccessibilitat+","+codiLocal+","+codiCaracteristica+","+valor+","+verificat+");";
+					String query="INSERT INTO eaccessible.accessibilitat (codiaccessibilitat, codilocal, codicaracteristica, valor, verificat) VALUES ("+codiAccessibilitat+","+codiLocal+","+codiCaracteristica+","+valor+",'"+verificat+"');";
 					
 					try {
 						Statement state = connection.createStatement();

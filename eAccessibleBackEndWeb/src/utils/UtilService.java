@@ -88,7 +88,7 @@ public class UtilService {
 						Statement state = connection.createStatement();
 						ResultSet res = state.executeQuery(query);
 						res.next();
-						i=res.getInt("codilocal");
+						i=res.getInt("codiaccessibilitat");
 						
 						state.close();
 					}catch(Exception ex) {
