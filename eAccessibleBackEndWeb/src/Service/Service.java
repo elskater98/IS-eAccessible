@@ -386,5 +386,62 @@ public class Service {
 		return fullAccessibilitat;
 		
 	}
+	@WebMethod
+	public List<Local> getAllLocals() throws BasicException{
+		List<Local> locals = new ArrayList<Local>();
+		Connection connection = null;
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "select * from eAccessible.local";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							Local local = new Local();
+							local.setCoditipoLocal(rs.getInt("coditipoLocal"));
+							local.setCodiCarrer(rs.getInt("codicarrer"));
+							local.setNomCarrer(rs.getString("nomcarrer"));
+							local.setNomVia(rs.getString("nomvia"));
+							local.setCodiLocal(rs.getInt("codilocal"));
+							local.setNomLocal(rs.getString("nomlocal"));
+							local.setNumero(rs.getInt("numero"));
+							local.setObservacions(rs.getString("observacions"));
+							local.setVerificat(rs.getString("verificat"));
+							locals.add(local);
+						}
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return locals;
+	}
+	
 	
 }
