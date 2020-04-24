@@ -17,7 +17,7 @@ public class UtilService {
 		
 	}
 	
-	public Integer generateId() throws BasicException {
+	public Integer generateIdLocal() throws BasicException {
 			
 			Connection connection = null;
 			Integer i=0;
@@ -65,6 +65,54 @@ public class UtilService {
 			return i+1;
 		}
 	
+	public Integer generateIdAccessibilitat()throws BasicException{
+		Connection connection = null;
+		Integer i=0;
+	
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					
+					String query = "select max(codiaccessibilitat) AS codiaccessibilitat from eaccessible.accessibilitat;";
+					try {
+						Statement state = connection.createStatement();
+						ResultSet res = state.executeQuery(query);
+						res.next();
+						i=res.getInt("codiaccessibilitat");
+						
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return i+1;
+	}
+	
+
 	public void checkLocalValues(Local local) throws BasicException {
 		if(local.getNomCarrer().isEmpty()) {
 			throw new BasicException(400, "Nom Carrer: no pot estar buit.");
@@ -100,6 +148,12 @@ public class UtilService {
 			throw new BasicException(400, "Verificat: no pot tenir una longitud superior a 1");
 		}*/
 		
+	}
+	
+	public void checkValor(Integer valor) throws BasicException {
+		if(valor<0 && valor>5) {
+			throw new BasicException(404,"Valor accessibilitat invalid, ha de ser de 0 a 5.");
+		}
 	}
 
 }
