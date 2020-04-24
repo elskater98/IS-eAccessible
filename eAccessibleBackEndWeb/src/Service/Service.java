@@ -22,6 +22,7 @@ import exceptions.BasicException;
 @WebService
 public class Service {
 	
+	
 	@WebMethod
 	public void altaLocal(Local local) throws Exception,BasicException {
 		Connection connection = null;
@@ -77,6 +78,7 @@ public class Service {
 			}
 		}
 	}
+	
 	
 	@WebMethod
 	public Local getLocal(Integer id) throws BasicException{
@@ -179,6 +181,7 @@ public class Service {
 		}
 	}
 	
+	
 	@WebMethod
 	public void UpdateLocal(Local local) throws Exception,BasicException {
 		
@@ -236,7 +239,7 @@ public class Service {
 		}
 	}
 	
-
+	
 	@WebMethod
 	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
 		Connection connection = null;
@@ -277,6 +280,7 @@ public class Service {
 			}
 		}
 	}
+	
 	
 	@WebMethod
 	public List<Local> getLocalsByName(String nomLocal) throws Exception, BasicException {
@@ -336,6 +340,7 @@ public class Service {
 		return locals;
 	}
 	
+	
 	@WebMethod
 	public Integer getTipusLocalByLocalName(String localName) throws Exception, BasicException {
 		Connection connection = null;
@@ -370,7 +375,7 @@ public class Service {
 			}
 			
 		} catch(Exception exception) {
-			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
+			throw new BasicException(500, "No s'ha pogut trobar el tipus de local amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
@@ -382,4 +387,61 @@ public class Service {
 		return codiTipusLocal;
 	}
 	
+	
+	@WebMethod
+	public List<Local> getLocalsByTipusLocal(Integer codiTipusLocal) throws Exception, BasicException {
+		List<Local> locals = new ArrayList<Local>();
+		Connection connection = null;
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "select coditipolocal,codicarrer,nomcarrer,nomvia,codilocal,nomlocal,numero,observacions,verificat from eAccessible.local where coditipolocal="+codiTipusLocal;
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							Local local = new Local();
+							local.setCoditipoLocal(rs.getInt("coditipolocal"));
+							local.setCodiCarrer(rs.getInt("codicarrer"));
+							local.setNomCarrer(rs.getString("nomcarrer"));
+							local.setNomVia(rs.getString("nomvia"));
+							local.setCodiLocal(rs.getInt("codilocal"));
+							local.setNomLocal(rs.getString("nomlocal"));
+							local.setNumero(rs.getInt("numero"));
+							local.setObservacions(rs.getString("observacions"));
+							local.setVerificat(rs.getString("verificat"));
+							locals.add(local);
+						}
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return locals;
+	}
 }
