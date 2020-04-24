@@ -4,7 +4,7 @@ import models.Accessibilitat;
 import models.Local;
 import utils.UtilService;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -327,6 +327,64 @@ public class Service {
 				throw new BasicException(500,ex.toString());
 			}
 		}
+	}
+	
+	@WebMethod
+	public ArrayList<Accessibilitat> getAccessibilitatByLocalId(Integer id) throws BasicException,Exception{
+		
+		Connection connection = null;
+		ArrayList<Accessibilitat> fullAccessibilitat = new ArrayList<>();
+		
+	
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					
+					String query = "SELECT * FROM eaccessible.accessibilitat where codilocal="+id;
+					try {
+						Statement state = connection.createStatement();
+						ResultSet res = state.executeQuery(query);
+						while(res.next()) {
+							Accessibilitat accessibilitat = new Accessibilitat();
+							accessibilitat.setCodiAccessibilitat(res.getInt("codiaccessibilitat"));
+							accessibilitat.setCodiLocal(res.getInt("codilocal"));
+							accessibilitat.setCodiCaracterisitca(res.getInt("codicaracteristica"));
+							accessibilitat.setValor(res.getInt("valor"));
+							accessibilitat.setVerificat(res.getString("verificat"));
+							fullAccessibilitat.add(accessibilitat);
+						}
+						
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(404, "El full d'accessibilitat amb identificador "+id+" no existeix.");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return fullAccessibilitat;
+		
 	}
 	
 }
