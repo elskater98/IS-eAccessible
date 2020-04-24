@@ -416,8 +416,8 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
-					String query = "select l.* "
-							+ "from eaccessible.local as l, eaccessible.tipolocal as tl where l.coditipolocal= tl.coditipolocal and l.coditipolocal=" + codiTipusLocal;
+					String query = "select * "
+							+ "from eaccessible.local where coditipolocal=" + codiTipusLocal;
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
