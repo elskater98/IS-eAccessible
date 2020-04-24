@@ -2,6 +2,7 @@ package Service;
 
 import models.Accessibilitat;
 import models.Local;
+import models.TipoLocal;
 import utils.UtilService;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Service {
 	
 	@WebMethod
 	public void altaLocal(Local local) throws Exception,BasicException {
+		
 		Connection connection = null;
 		
 		UtilService us = new UtilService();
@@ -82,7 +84,6 @@ public class Service {
 	
 	@WebMethod
 	public Local getLocal(Integer id) throws BasicException{
-		
 		
 		Connection connection = null;
 		Local local = new Local();
@@ -142,6 +143,7 @@ public class Service {
 	
 	@WebMethod
 	public void baixaLocal(Integer codiLocal) throws Exception, BasicException {
+		
 		Connection connection = null;
 		
 		try {
@@ -242,6 +244,7 @@ public class Service {
 	
 	@WebMethod
 	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
+		
 		Connection connection = null;
 		
 		try {
@@ -284,8 +287,8 @@ public class Service {
 	
 	@WebMethod
 	public List<Local> getLocalsByName(String nomLocal) throws Exception, BasicException {
-		List<Local> locals = new ArrayList<Local>();
 		
+		List<Local> locals = new ArrayList<Local>();
 		Connection connection = null;
 		
 		try {
@@ -342,9 +345,11 @@ public class Service {
 	
 	
 	@WebMethod
-	public Integer getTipusLocalByLocalName(String localName) throws Exception, BasicException {
+	public TipoLocal getTipusLocalByCodiLocal(Integer codiLocal) throws Exception, BasicException {
+		
 		Connection connection = null;
-		Integer codiTipusLocal = 0;
+		TipoLocal tl = new TipoLocal();
+		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
@@ -358,13 +363,17 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "select coditipolocal from eAccessible.local where nomlocal LIKE UPPER('%"+localName+"%')";
 					
+					String query = "select tl.* from eaccessible.local as l, eaccessible.tipolocal as tl "
+							+ "where l.coditipolocal = tl.coditipolocal and l.codilocal="+codiLocal;
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
 						while(rs.next()) {
-							codiTipusLocal = rs.getInt("coditipolocal");
+							tl.setCodiTipoLocal(rs.getInt("coditipolocal"));
+							tl.setNomTipoLocalCA(rs.getString("nomtipolocalca"));
+							tl.setNomTipoLocalES(rs.getString("nomtipolocales"));
+							tl.setNomTipoLocalEN(rs.getString("nomtipolocalen"));
 						}
 						state.close();
 					}catch(Exception ex) {
@@ -384,15 +393,16 @@ public class Service {
 			}
 		}
 		
-		return codiTipusLocal;
+		return tl;
 	}
 	
 	
 	@WebMethod
-	public List<Local> getLocalsByTipusLocal(Integer codiTipusLocal) throws Exception, BasicException {
+	public List<Local> getLocalsByCodiTipusLocal(Integer codiTipusLocal) throws Exception, BasicException {
+		
 		List<Local> locals = new ArrayList<Local>();
 		Connection connection = null;
-		
+
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
@@ -405,9 +415,9 @@ public class Service {
 					}catch(Exception ex) {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
-					
-					String query = "select coditipolocal,codicarrer,nomcarrer,nomvia,codilocal,nomlocal,numero,observacions,verificat from eAccessible.local where coditipolocal="+codiTipusLocal;
-					
+
+					String query = "select l.* "
+							+ "from eaccessible.local as l, eaccessible.tipolocal as tl where l.coditipolocal= tl.coditipolocal and l.coditipolocal=" + codiTipusLocal;
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
@@ -431,7 +441,7 @@ public class Service {
 					connection.close();
 				}
 			}
-			
+
 		} catch(Exception exception) {
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
 		} finally {
@@ -441,7 +451,8 @@ public class Service {
 				throw new BasicException(500,ex.toString());
 			}
 		}
-		
+
 		return locals;
 	}
+
 }
