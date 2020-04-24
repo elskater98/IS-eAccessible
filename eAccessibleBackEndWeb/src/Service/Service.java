@@ -42,7 +42,7 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					Integer codiLocal = us.generateId();
+					Integer codiLocal = us.generateIdLocal();
 					Integer coditipoLocal= local.getCoditipoLocal();
 					Integer codicarrer=local.getCodiCarrer();
 					String nomCarrer= local.getNomCarrer().toUpperCase();
@@ -236,7 +236,6 @@ public class Service {
 		}
 	}
 	
-
 	@WebMethod
 	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
 		Connection connection = null;
@@ -278,5 +277,56 @@ public class Service {
 		}
 	}
 	
+	@WebMethod
+	public void addAccessibilitat(Accessibilitat accessibilitat) throws Exception, BasicException {
+		Connection connection = null;
+		
+		UtilService us = new UtilService();
+		us.checkValor(accessibilitat.getValor());
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					Integer codiAccessibilitat =accessibilitat.getCodiAccessibilitat();
+					Integer codiLocal = accessibilitat.getCodiLocal();
+					Integer codiCaracteristica = accessibilitat.getCodiCaracterisitca();
+					Integer valor = accessibilitat.getValor();
+					String verificat = accessibilitat.getVerificat();
+
+					
+					String query="INSERT INTO eaccessible.accessibilitat (codiaccessibilitat, codilocal, codicaracteristica, valor, verificat) VALUES ("+codiAccessibilitat+","+codiLocal+","+codiCaracteristica+","+valor+","+verificat+");";
+					
+					try {
+						Statement state = connection.createStatement();
+						state.executeUpdate(query);	
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(500, "S'ha produit un error en la Base de dades. Accessibilitat");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+	}
 	
 }
