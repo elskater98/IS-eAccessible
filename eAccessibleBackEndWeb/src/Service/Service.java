@@ -463,7 +463,7 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "select * from eAccessible.caracteristicatipolocal where coditipolocal="+codiTipoLocal;
+					String query = "select * from eaccessible.caracteristicatipolocal where coditipolocal="+codiTipoLocal;
 					
 					try {
 						Statement state = connection.createStatement();
@@ -515,7 +515,7 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "select * from eAccessible.local where nomlocal LIKE UPPER('%"+nomLocal+"%') and coditipolocal="+codiTipoLocal;
+					String query = "select * from eaccessible.local where nomlocal LIKE UPPER('%"+nomLocal+"%') and coditipolocal="+codiTipoLocal;
 					
 					try {
 						Statement state = connection.createStatement();
