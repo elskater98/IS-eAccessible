@@ -1,6 +1,7 @@
 package Service;
 
 import models.Accessibilitat;
+import models.Caracteristica;
 import models.CaracteristicaTipoLocal;
 import models.Local;
 import models.TipoLocal;
@@ -447,8 +448,8 @@ public class Service {
 	
 	
 	@WebMethod
-	public List<CaracteristicaTipoLocal> getCharacteristics(Integer codiTipoLocal) throws BasicException{
-		List<CaracteristicaTipoLocal> characteristics = new ArrayList<CaracteristicaTipoLocal>();
+	public List<Caracteristica> getCharacteristic(Integer codiCaracteristica) throws BasicException{
+		List<Caracteristica> characteristics = new ArrayList<Caracteristica>();
 		Connection connection = null;
 		
 		try {
@@ -464,17 +465,20 @@ public class Service {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "select * from eaccessible.caracteristicatipolocal where coditipolocal="+codiTipoLocal;
+					String query = "select * from eaccessible.caracteristica where codicaracteristica="+codiCaracteristica;
 					
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
 						while(rs.next()) {
-							CaracteristicaTipoLocal caracteristicaTipoLocal = new CaracteristicaTipoLocal();
-							caracteristicaTipoLocal.setCodiCaracteristicaTipoLocal(rs.getInt("codicaracteristicatipolocal"));;
-							caracteristicaTipoLocal.setCodiCaracteristica(rs.getInt("codicaracteristica"));
-							caracteristicaTipoLocal.setCodiTipoLocal(rs.getInt("coditipolocal"));
-							characteristics.add(caracteristicaTipoLocal);
+							Caracteristica caracteristica = new Caracteristica();
+							caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
+							caracteristica.setNomCaracteristicaCA(rs.getString("nomcaracteristicaca"));
+							caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+							caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+							caracteristica.setTipo(rs.getInt("tipo"));
+							caracteristica.setCodinivell(rs.getInt("codinivell"));
+							characteristics.add(caracteristica);
 						}
 						state.close();
 					}catch(Exception ex) {
@@ -557,8 +561,8 @@ public class Service {
 	
 	
 	@WebMethod
-	public List<TipoLocal> getTipusLocalById(Integer codiTipoLocal) throws BasicException{
-		List<TipoLocal> tLocal = new ArrayList<TipoLocal>();
+	public TipoLocal getTipusLocalById(Integer codiTipoLocal) throws BasicException{
+		TipoLocal tl = new TipoLocal();
 		
 		Connection connection = null;
 		
@@ -582,12 +586,12 @@ public class Service {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
 						while(rs.next()) {
-							TipoLocal tl = new TipoLocal();
+							
 							tl.setCodiTipoLocal(rs.getInt("coditipolocal"));
 							tl.setNomTipoLocalCA(rs.getString("nomtipolocalca"));
 							tl.setNomTipoLocalES(rs.getString("nomtipolocales"));
 							tl.setNomTipoLocalEN(rs.getString("nomtipolocalen"));
-							tLocal.add(tl);
+							
 						}
 						state.close();
 					}catch(Exception ex) {
@@ -607,7 +611,7 @@ public class Service {
 			}
 		}
 		
-		return tLocal;
+		return tl;
 	}
 	
 	@WebMethod
