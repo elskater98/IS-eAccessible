@@ -1,4 +1,4 @@
-package Service;
+package service2;
 
 import models.Accessibilitat;
 import models.Caracteristica;
