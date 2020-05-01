@@ -7,6 +7,11 @@
 <title>Alta Local</title>
 </head>
 <body>
+
+
+<% String codiTipoLocal = (String) session.getAttribute("codiTipoLocal");
+%>
+
 <h1>Alta Local</h1>
 <form method="post" action="SvlaltaLocal">
 <div>
@@ -30,10 +35,7 @@
  <input type="text" name="nomCarrer">
  </div>
  
- <div>
- <label>observacions</label>
-  <textarea type="text" name="observacions"></textarea>
- </div>
+
  
  <%
 service2.TipoLocal[] tipoLocal = null;
@@ -58,12 +60,17 @@ service2.TipoLocal[] tipoLocal = null;
  
  <div>
  <label>codiCarrer</label>
-  <input type="number" name="codiCarrer">
+  <input type="number" min=1 name="codiCarrer">
  </div>
  
   <div>
   <label>numero</label>
-  <input type="number" name="numero">
+  <input type="number" min=1 name="numero">
+ </div>
+ 
+ <div>
+ <label>observacions</label>
+  <textarea type="text" maxLength=300 name="observacions"></textarea>
  </div>
  
  <input type="submit" value="Donar alta local">
