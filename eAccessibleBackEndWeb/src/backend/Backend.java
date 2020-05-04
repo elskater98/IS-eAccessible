@@ -1,4 +1,4 @@
-package service2;
+package backend;
 
 import models.Accessibilitat;
 import models.Caracteristica;
@@ -23,7 +23,7 @@ import java.sql.Statement;
 import exceptions.BasicException;
 
 @WebService
-public class Service {
+public class Backend {
 	
 	@WebMethod
 	public void altaLocal(Local local) throws Exception,BasicException {
