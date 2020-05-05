@@ -36,6 +36,7 @@ public class Backend {
 			InitialContext context = new InitialContext();
 			if(context !=null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				
 				if(datasource == null) {
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {

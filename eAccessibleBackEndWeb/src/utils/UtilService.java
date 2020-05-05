@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -154,6 +158,60 @@ public class UtilService {
 		if(valor<0 && valor>5) {
 			throw new BasicException(404,"Valor accessibilitat invalid, ha de ser de 0 a 5.");
 		}
+	}
+	
+	public void generateIncidencia(Integer codi) throws BasicException{
+		Connection connection = null;
+	
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/incidencia");
+				if(datasource == null) {
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					Integer codiIncidencia= new Random().nextInt(999999999)+1;
+					
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String date = formatter.format( new Date());
+					
+					formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.ZZZZ");
+					
+					String hour = formatter.format( new Date());
+					
+					String query = "INSERT INTO log.incidencia(idIncidencia, data, dataHora , codiTipusIncidencia) VALUES ("+codiIncidencia+", "+date+","+hour+"," +codi+");";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet res = state.executeQuery(query);
+						res.next();
+						state.close();
+					}catch(Exception ex) {
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		
 	}
 
 }
