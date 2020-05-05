@@ -38,11 +38,13 @@ public class Backend {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -61,9 +63,12 @@ public class Backend {
 							+ "('"+codiLocal+"','"+coditipoLocal+"','"+codicarrer+"','"+nomCarrer+"','"+nomVia+"','"+numero+"','"+nomLocal+"','"+observacions+"','"+verificat+"')";
 					try {
 						Statement state = connection.createStatement();
-						state.executeUpdate(query);	
+						state.executeUpdate(query);
+						us.generateIncidencia(200);
+						us.generateIncidencia(201);
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -71,12 +76,14 @@ public class Backend {
 			}
 			
 		}catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "S'ha produit un error en la Base de dades.");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -88,17 +95,20 @@ public class Backend {
 		
 		Connection connection = null;
 		Local local = new Local();
+		UtilService us = new UtilService();
 	
 		try {
 			InitialContext context = new InitialContext();
 			if(context !=null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -121,6 +131,7 @@ public class Backend {
 						
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -128,12 +139,14 @@ public class Backend {
 			}
 			
 		}catch(Exception exception) {
+			us.generateIncidencia(404);
 			throw new BasicException(404, "El local amb identificador "+id+" no existeix.");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -145,17 +158,20 @@ public class Backend {
 	@WebMethod
 	public void baixaLocal(Integer codiLocal) throws Exception, BasicException {
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -166,6 +182,7 @@ public class Backend {
 						state.executeUpdate(query);	
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -173,11 +190,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut eliminar el local amb el seu codi introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -195,11 +214,13 @@ public class Backend {
 			if(context !=null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 				
@@ -222,6 +243,7 @@ public class Backend {
 						state.executeUpdate(query);	
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -229,12 +251,14 @@ public class Backend {
 			}
 			
 		}catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "S'ha produit un error en la Base de dades.");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -243,17 +267,19 @@ public class Backend {
 	@WebMethod
 	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
 		Connection connection = null;
-		
+		UtilService us = new UtilService();
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -264,6 +290,7 @@ public class Backend {
 						state.executeUpdate(query);	
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -271,11 +298,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut validar el local amb el seu codi introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -293,11 +322,13 @@ public class Backend {
 			if(context !=null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -315,6 +346,7 @@ public class Backend {
 						state.executeUpdate(query);	
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -322,12 +354,14 @@ public class Backend {
 			}
 			
 		}catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "S'ha produit un error en la Base de dades. Accessibilitat");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -338,6 +372,7 @@ public class Backend {
 		
 		Connection connection = null;
 		ArrayList<Accessibilitat> fullAccessibilitat = new ArrayList<>();
+		UtilService us = new UtilService();
 		
 	
 		try {
@@ -345,11 +380,13 @@ public class Backend {
 			if(context !=null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -370,6 +407,7 @@ public class Backend {
 						
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -377,12 +415,14 @@ public class Backend {
 			}
 			
 		}catch(Exception exception) {
+			us.generateIncidencia(404);
 			throw new BasicException(404, "El full d'accessibilitat amb identificador "+id+" no existeix.");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -394,17 +434,20 @@ public class Backend {
 	public List<Local> getAllLocals() throws BasicException{
 		List<Local> locals = new ArrayList<Local>();
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -428,6 +471,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -435,11 +479,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -452,17 +498,20 @@ public class Backend {
 	public List<Caracteristica> getCharacteristic(Integer codiCaracteristica) throws BasicException{
 		List<Caracteristica> characteristics = new ArrayList<Caracteristica>();
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -483,6 +532,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -490,11 +540,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -506,6 +558,7 @@ public class Backend {
 	public List<Local> getLocalsbyTipusAndName(Integer codiTipoLocal, String nomLocal) throws BasicException{
 		List<Local> local = new ArrayList<Local>();
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		
 		try {
@@ -513,11 +566,13 @@ public class Backend {
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -541,6 +596,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -548,11 +604,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -566,6 +624,7 @@ public class Backend {
 		TipoLocal tl = new TipoLocal();
 		
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		
 		try {
@@ -573,11 +632,13 @@ public class Backend {
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -596,6 +657,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -603,11 +665,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -620,17 +684,20 @@ public class Backend {
 		
 		List<Local> locals = new ArrayList<Local>();
 		Connection connection = null;
+		UtilService us = new UtilService();
 		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -661,11 +728,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -679,17 +748,20 @@ public class Backend {
 		
 		Connection connection = null;
 		TipoLocal tl = new TipoLocal();
+		UtilService us = new UtilService();
 		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -707,6 +779,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -714,11 +787,13 @@ public class Backend {
 			}
 			
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar el tipus de local amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -732,17 +807,20 @@ public class Backend {
 		
 		List<Local> locals = new ArrayList<Local>();
 		Connection connection = null;
-
+		UtilService us = new UtilService();
+		
 		try {
 			InitialContext context = new InitialContext();
 			if(context != null) {
 				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
 				if(datasource == null) {
+					us.generateIncidencia(500);
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
@@ -766,6 +844,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -773,11 +852,13 @@ public class Backend {
 			}
 
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -791,6 +872,7 @@ public class Backend {
 		
 		List<TipoLocal> tipusLocals = new ArrayList<TipoLocal>();
 		Connection connection = null;
+		UtilService us = new UtilService();
 
 		try {
 			InitialContext context = new InitialContext();
@@ -827,11 +909,13 @@ public class Backend {
 			}
 
 		} catch(Exception exception) {
+			us.generateIncidencia(500);
 			throw new BasicException(500, "No s'ha pogut els tipus de locals de la base de dades.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
 		}

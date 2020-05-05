@@ -186,12 +186,13 @@ public class UtilService {
 					
 					String hour = formatter.format( new Date());
 					
-					String query = "INSERT INTO log.incidencia(idIncidencia, data, dataHora , codiTipusIncidencia) VALUES ("+codiIncidencia+", "+date+","+hour+"," +codi+");";
+					String query = "INSERT INTO log.incidencia(idIncidencia, data, dataHora , codiTipusIncidencia) VALUES ("+codiIncidencia+", '"+date+"','"+hour+"'," +codi+");";
 					
 					try {
 						Statement state = connection.createStatement();
-						ResultSet res = state.executeQuery(query);
-						res.next();
+						state.executeUpdate("INSERT INTO log.incidencia(" + 
+								"	\"idIncidencia\", \"data\", \"dataHora\", \"codiTipusIncidencia\")" + 
+								"	VALUES (5, '2020/05/05', '10/03/2017 07:29:46', 201);");
 						state.close();
 					}catch(Exception ex) {
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
@@ -201,7 +202,7 @@ public class UtilService {
 			}
 			
 		}catch(Exception exception) {
-			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador");
+			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador(sss)");
 		}
 		finally {
 			try {
