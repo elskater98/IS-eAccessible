@@ -173,6 +173,7 @@ public class UtilService {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -183,18 +184,20 @@ public class UtilService {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 					String date = formatter.format( new Date());
 					
-					formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.ZZZZ");
+					formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					
 					String hour = formatter.format( new Date());
 					
 					
 					String query ="INSERT INTO log.incidencia(\"idIncidencia\", \"data\", \"dataHora\", \"codiTipusIncidencia\") VALUES ("+codiIncidencia+", '"+date+"', '"+hour+"', "+codi+");";
+					System.out.println("------>"+query);
 					
 					try {
 						Statement state = connection.createStatement();
-						//state.executeUpdate(query); FALLA LA QUERY
+						state.executeUpdate(query);
 						state.close();
 					}catch(Exception ex) {
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -202,12 +205,14 @@ public class UtilService {
 			}
 			
 		}catch(Exception exception) {
+			exception.printStackTrace();
 			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador(XXXXX)");
 		}
 		finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
