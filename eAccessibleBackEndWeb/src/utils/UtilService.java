@@ -166,7 +166,7 @@ public class UtilService {
 		try {
 			InitialContext context = new InitialContext();
 			if(context !=null) {
-				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/incidencia");
+				DataSource datasource = (DataSource) context.lookup("java:jboss/PostgreSQL/incidencia");
 				if(datasource == null) {
 					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
 				}else {
@@ -175,6 +175,7 @@ public class UtilService {
 					}catch(Exception ex) {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
+					
 					
 					Integer codiIncidencia= new Random().nextInt(999999999)+1;
 					
@@ -186,13 +187,12 @@ public class UtilService {
 					
 					String hour = formatter.format( new Date());
 					
-					String query = "INSERT INTO log.incidencia(idIncidencia, data, dataHora , codiTipusIncidencia) VALUES ("+codiIncidencia+", '"+date+"','"+hour+"'," +codi+");";
+					
+					String query ="INSERT INTO log.incidencia(\"idIncidencia\", \"data\", \"dataHora\", \"codiTipusIncidencia\") VALUES ("+codiIncidencia+", '"+date+"', '"+hour+"', "+codi+");";
 					
 					try {
 						Statement state = connection.createStatement();
-						state.executeUpdate("INSERT INTO log.incidencia(" + 
-								"	\"idIncidencia\", \"data\", \"dataHora\", \"codiTipusIncidencia\")" + 
-								"	VALUES (5, '2020/05/05', '10/03/2017 07:29:46', 201);");
+						//state.executeUpdate(query); FALLA LA QUERY
 						state.close();
 					}catch(Exception ex) {
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
@@ -202,7 +202,7 @@ public class UtilService {
 			}
 			
 		}catch(Exception exception) {
-			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador(sss)");
+			throw new BasicException(500, "Error intern - No s'ha pogut generar un identificador(XXXXX)");
 		}
 		finally {
 			try {
@@ -211,8 +211,6 @@ public class UtilService {
 				throw new BasicException(500,ex.toString());
 			}
 		}
-		
-		
 	}
 
 }
