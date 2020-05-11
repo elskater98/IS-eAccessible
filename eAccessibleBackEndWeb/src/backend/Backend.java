@@ -172,16 +172,19 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
 					String query = "delete from eaccessible.local where codilocal=" + codiLocal;
-					
+					String query2="DELETE FROM eaccessible.accessibilitat WHERE codiLocal="+ codiLocal;
 					try {
 						Statement state = connection.createStatement();
-						state.executeUpdate(query);	
+						state.executeUpdate(query2); // Elimina el full d'accessibilitat, ja que conte una clau forana, per tal de poder eliminar el local correctament.	
+						state.executeUpdate(query);
 						state.close();
 					}catch(Exception ex) {
+						ex.printStackTrace();
 						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
@@ -191,11 +194,13 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut eliminar el local amb el seu codi introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
+				ex.printStackTrace();
 				us.generateIncidencia(500);
 				throw new BasicException(500,ex.toString());
 			}
