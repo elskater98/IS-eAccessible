@@ -495,7 +495,66 @@ public class Backend {
 	
 	
 	@WebMethod
-	public List<Caracteristica> getCharacteristic(Integer codiCaracteristica) throws BasicException{
+	public Caracteristica getCharacteristic(Integer codiCaracteristica) throws BasicException{
+		
+		Connection connection = null;
+		UtilService us = new UtilService();
+		Caracteristica caracteristica = new Caracteristica();
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					us.generateIncidencia(500);
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						us.generateIncidencia(444);
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "select * from eaccessible.caracteristica where codicaracteristica="+codiCaracteristica;
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						rs.next();
+						caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
+						caracteristica.setNomCaracteristicaCA(rs.getString("nomcaracteristicaca"));
+						caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+						caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+						caracteristica.setTipo(rs.getInt("tipo"));
+						caracteristica.setCodinivell(rs.getInt("codinivell"));
+						
+						state.close();
+					}catch(Exception ex) {
+						us.generateIncidencia(500);
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			us.generateIncidencia(500);
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				us.generateIncidencia(500);
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return caracteristica;
+	}
+	
+	@WebMethod
+	public List<Caracteristica> getAllCharacteristic() throws BasicException{
 		List<Caracteristica> characteristics = new ArrayList<Caracteristica>();
 		Connection connection = null;
 		UtilService us = new UtilService();
@@ -515,7 +574,7 @@ public class Backend {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "select * from eaccessible.caracteristica where codicaracteristica="+codiCaracteristica;
+					String query = "select * from eaccessible.caracteristica;";
 					
 					try {
 						Statement state = connection.createStatement();
