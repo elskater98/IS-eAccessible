@@ -987,4 +987,67 @@ public class Backend {
 		return tipusLocals;
 	}
 	
+	@WebMethod
+	public List<Local> getAllLocalsNonVerificated() throws BasicException{
+		List<Local> locals = new ArrayList<Local>();
+		Connection connection = null;
+		UtilService us = new UtilService();
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					us.generateIncidencia(500);
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						us.generateIncidencia(444);
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "SELECT * FROM eaccessible.local WHERE verificat='N';";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							Local local = new Local();
+							local.setCoditipoLocal(rs.getInt("coditipoLocal"));
+							local.setCodiCarrer(rs.getInt("codicarrer"));
+							local.setNomCarrer(rs.getString("nomcarrer"));
+							local.setNomVia(rs.getString("nomvia"));
+							local.setCodiLocal(rs.getInt("codilocal"));
+							local.setNomLocal(rs.getString("nomlocal"));
+							local.setNumero(rs.getInt("numero"));
+							local.setObservacions(rs.getString("observacions"));
+							local.setVerificat(rs.getString("verificat"));
+							locals.add(local);
+						}
+						state.close();
+					}catch(Exception ex) {
+						us.generateIncidencia(500);
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			us.generateIncidencia(500);
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				us.generateIncidencia(500);
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return locals;
+	}
+	
 }
