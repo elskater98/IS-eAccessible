@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/backend/Accessibilitat.java=UTF-8
+encoding//src/backend/Backend.java=UTF-8
+encoding//src/backend/BackendService.java=UTF-8
+encoding//src/backend/BackendServiceLocator.java=UTF-8
+encoding//src/backend/BackendServiceSoapBindingStub.java=UTF-8
+encoding//src/backend/BasicException.java=UTF-8
+encoding//src/backend/Caracteristica.java=UTF-8
+encoding//src/backend/Exception.java=UTF-8
+encoding//src/backend/Local.java=UTF-8
+encoding//src/backend/TipoLocal.java=UTF-8
