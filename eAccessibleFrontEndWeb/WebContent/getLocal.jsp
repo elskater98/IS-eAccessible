@@ -14,7 +14,7 @@
  Local local = null;
  Accessibilitat [] ac = null;
  try {
-         backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
+	 	 backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
          backend.Backend port = serviceLocator.getBackendPort();
          local = port.getLocal(Integer.parseInt(request.getParameter("codiLocal")));
          ac = port.getAccessibilitatByLocalId(Integer.parseInt(request.getParameter("codiLocal")));
