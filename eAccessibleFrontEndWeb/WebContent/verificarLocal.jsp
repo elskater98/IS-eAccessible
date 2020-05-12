@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Verificar Local</title>
 </head>
 <body>
 <form method="post" action="sVerificarLocal">

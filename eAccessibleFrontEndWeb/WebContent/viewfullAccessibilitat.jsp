@@ -19,7 +19,11 @@
          backend.Backend port = serviceLocator.getBackendPort();
          local = port.getLocal(Integer.parseInt(request.getParameter("codiLocal")));
          ac = port.getAccessibilitatByLocalId(Integer.parseInt(request.getParameter("codiLocal")));
-         
+         if(ac==null){
+        	 response.sendRedirect("/eAccessibleFrontEndWeb/error.jsp?error=El local no disposa de full d'accessibilitat.");
+        	 
+        	 
+         }
     }catch(Exception ex) {
         ex.printStackTrace();
     }
