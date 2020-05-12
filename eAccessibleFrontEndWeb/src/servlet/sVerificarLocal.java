@@ -51,11 +51,12 @@ public class sVerificarLocal extends HttpServlet {
 
 	        
 	        Integer codiLocal = Integer.parseInt(request.getParameter("codiLocal"));
+	        String verificat = request.getParameter("verificat");
 	        
 	        try {
 	            backend.BackendServiceLocator serviceLocator = new BackendServiceLocator();
 	            backend.Backend port = serviceLocator.getBackendPort();
-	            port.validarLocal(codiLocal);
+	            port.validarLocal(codiLocal,verificat);
 
 	        }catch(Exception e) {
 	            e.printStackTrace();

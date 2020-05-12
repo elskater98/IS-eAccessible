@@ -270,7 +270,7 @@ public class Backend {
 	}
 	
 	@WebMethod
-	public void validarLocal(Integer codiLocal) throws Exception, BasicException {
+	public void validarLocal(Integer codiLocal, String s) throws Exception, BasicException {
 		Connection connection = null;
 		UtilService us = new UtilService();
 		try {
@@ -288,7 +288,7 @@ public class Backend {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
-					String query = "update eAccessible.local set verificat='S' where codilocal="+codiLocal;
+					String query = "update eAccessible.local set verificat='"+s+"' where codilocal="+codiLocal;
 					
 					try {
 						Statement state = connection.createStatement();
@@ -1048,6 +1048,67 @@ public class Backend {
 		}
 		
 		return locals;
+	}
+	
+	@WebMethod
+	public List<Caracteristica> getCaracterisitcaTipus(Integer codiTipusLocal) throws Exception, BasicException {
+		
+		List<Caracteristica> caracteristicaList = new ArrayList<Caracteristica>();
+		Connection connection = null;
+		UtilService us = new UtilService();
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					us.generateIncidencia(500);
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						us.generateIncidencia(444);
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+
+					String query = "SELECT cr.* FROM eaccessible.caracteristicatipolocal ca, eaccessible.caracteristica cr WHERE ca.codiTipoLocal="+codiTipusLocal+" and ca.codicaracteristica=cr.codicaracteristica";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							Caracteristica caracteristica = new Caracteristica();
+							caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
+							caracteristica.setNomCaracteristicaCA(rs.getString("nomcaracteristicaca"));
+							caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+							caracteristica.setNomCaracteristicaES(rs.getString("nomcaracteristicaes"));
+							caracteristica.setTipo(rs.getInt("tipo"));
+							caracteristica.setCodinivell(rs.getInt("codinivell"));
+							caracteristicaList.add(caracteristica);
+						}
+						state.close();
+					}catch(Exception ex) {
+						us.generateIncidencia(500);
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+
+		} catch(Exception exception) {
+			us.generateIncidencia(500);
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				us.generateIncidencia(500);
+				throw new BasicException(500,ex.toString());
+			}
+		}
+
+		return caracteristicaList;
 	}
 	
 }

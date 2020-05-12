@@ -80,10 +80,16 @@ public class BackendProxy implements backend.Backend {
     return backend.getLocalsByCodiTipusLocal(arg0);
   }
   
-  public void validarLocal(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException, backend.Exception{
+  public void validarLocal(java.lang.Integer arg0, java.lang.String arg1) throws java.rmi.RemoteException, backend.BasicException, backend.Exception{
     if (backend == null)
       _initBackendProxy();
-    backend.validarLocal(arg0);
+    backend.validarLocal(arg0, arg1);
+  }
+  
+  public backend.Caracteristica[] getCaracterisitcaTipus(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException, backend.Exception{
+    if (backend == null)
+      _initBackendProxy();
+    return backend.getCaracterisitcaTipus(arg0);
   }
   
   public backend.Local getLocal(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException{
@@ -108,6 +114,12 @@ public class BackendProxy implements backend.Backend {
     if (backend == null)
       _initBackendProxy();
     return backend.getLocalsByName(arg0);
+  }
+  
+  public backend.Local[] getAllLocalsNonVerificated() throws java.rmi.RemoteException, backend.BasicException{
+    if (backend == null)
+      _initBackendProxy();
+    return backend.getAllLocalsNonVerificated();
   }
   
   public backend.Local[] getLocalsbyTipusAndName(java.lang.Integer arg0, java.lang.String arg1) throws java.rmi.RemoteException, backend.BasicException{
@@ -138,12 +150,6 @@ public class BackendProxy implements backend.Backend {
     if (backend == null)
       _initBackendProxy();
     backend.altaLocal(arg0);
-  }
-  
-  public backend.Local[] getAllLocalsNonVerificated() throws java.rmi.RemoteException, backend.BasicException{
-    if (backend == null)
-      _initBackendProxy();
-    return backend.getAllLocalsNonVerificated();
   }
   
   

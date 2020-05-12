@@ -69,4 +69,14 @@
     <servlet-name>verificarLocal</servlet-name>
     <url-pattern>/jVerificarLocal</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>viewfullAccessibilitat</display-name>
+    <servlet-name>viewfullAccessibilitat</servlet-name>
+    <jsp-file>/viewfullAccessibilitat.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewfullAccessibilitat</servlet-name>
+    <url-pattern>/jviewfullAccessibilitat</url-pattern>
+  </servlet-mapping>
 </web-app>

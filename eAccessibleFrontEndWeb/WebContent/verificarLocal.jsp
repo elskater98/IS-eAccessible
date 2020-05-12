@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Verificar Local</title>
 </head>
 <body>
 <form method="post" action="sVerificarLocal">
@@ -13,7 +13,7 @@
 backend.Local local = null;
 
  try {
-         backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
+	 	 backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
          backend.Backend port = serviceLocator.getBackendPort();
          local=port.getLocal(Integer.parseInt(request.getParameter("codiLocal")));
          
@@ -28,6 +28,15 @@ backend.Local local = null;
     <option value="<%=local.getCodiLocal()%>"> <%=local.getNomLocal()%> -- <%=local.getNomVia()%> <%=local.getNomCarrer()%></option>
 </select>
  </div>
+ 
+ <div>
+ <select name="verificat"> 
+    <option value="S">Si</option>
+    <option value="N">No</option>
+</select>
+ </div>
+ 
+ 
  
  <button type="submit">Verificar</button>
  

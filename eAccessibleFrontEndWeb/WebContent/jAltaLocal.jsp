@@ -33,7 +33,7 @@
 
  
  <%
-backend.TipoLocal[] tipoLocal = null;
+ backend.TipoLocal[] tipoLocal = null;
  try {
          backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
          backend.Backend port = serviceLocator.getBackendPort();

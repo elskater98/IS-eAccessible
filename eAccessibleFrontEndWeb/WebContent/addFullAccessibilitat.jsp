@@ -18,7 +18,7 @@ backend.Local local = null;
          backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
          backend.Backend port = serviceLocator.getBackendPort();
          local=port.getLocal(Integer.parseInt(request.getParameter("codiLocal")));
-         ca = port.getAllCharacteristic();
+         ca = port.getCaracterisitcaTipus(local.getCoditipoLocal());
          
 
     }catch(Exception ex) {
@@ -49,6 +49,7 @@ backend.Local local = null;
 </select>
 
 </div>
+	<a href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detail</a>
 	<button type="submit">Add Caracteristica</button>
 </form>
 </body>
