@@ -1072,7 +1072,7 @@ public class Backend {
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
-					String query = "SELECT cr.* FROM eaccessible.caracteristicatipolocal ca, eaccessible.caracteristica cr WHERE ca.codiTipoLocal="+codiTipusLocal+" and ca.codicaracteristica=cr.codicaracteristica;";
+					String query = "SELECT cr.* FROM eaccessible.caracteristicatipolocal ca, eaccessible.caracteristica cr WHERE ca.codiTipoLocal="+codiTipusLocal+" and ca.codicaracteristica=cr.codicaracteristica";
 					
 					try {
 						Statement state = connection.createStatement();
