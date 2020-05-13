@@ -45,6 +45,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -69,6 +70,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -77,6 +79,7 @@ public class Backend {
 			
 		}catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "S'ha produit un error en la Base de dades.");
 		}
 		finally {
@@ -84,6 +87,7 @@ public class Backend {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -109,6 +113,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -133,6 +138,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -141,6 +147,7 @@ public class Backend {
 			
 		}catch(Exception exception) {
 			us.generateIncidencia(404);
+			exception.printStackTrace();
 			throw new BasicException(404, "El local amb identificador "+id+" no existeix.");
 		}
 		finally {
@@ -148,6 +155,7 @@ public class Backend {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -228,6 +236,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 				
@@ -252,6 +261,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -260,6 +270,7 @@ public class Backend {
 			
 		}catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "S'ha produit un error en la Base de dades.");
 		}
 		finally {
@@ -267,6 +278,7 @@ public class Backend {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -288,6 +300,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -300,6 +313,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -308,12 +322,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut validar el local amb el seu codi introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -338,6 +354,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -358,6 +375,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -366,6 +384,7 @@ public class Backend {
 			
 		}catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "S'ha produit un error en la Base de dades. Accessibilitat");
 		}
 		finally {
@@ -373,6 +392,7 @@ public class Backend {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -398,6 +418,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -420,6 +441,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement.");
 					}
 					connection.close();
@@ -428,6 +450,7 @@ public class Backend {
 			
 		}catch(Exception exception) {
 			us.generateIncidencia(404);
+			exception.printStackTrace();
 			throw new BasicException(404, "El full d'accessibilitat amb identificador "+id+" no existeix.");
 		}
 		finally {
@@ -435,6 +458,7 @@ public class Backend {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -460,6 +484,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -485,6 +510,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -493,12 +519,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -526,6 +554,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -546,6 +575,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -554,12 +584,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -585,6 +617,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -607,6 +640,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -615,12 +649,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -647,6 +683,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -672,6 +709,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -680,12 +718,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -714,6 +754,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -734,6 +775,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -742,12 +784,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -774,6 +818,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -799,6 +844,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -807,12 +853,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -840,6 +888,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -859,6 +908,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -867,12 +917,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar el tipus de local amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -900,6 +952,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
@@ -925,6 +978,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -933,12 +987,14 @@ public class Backend {
 
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -964,6 +1020,8 @@ public class Backend {
 					try {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
+						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
@@ -983,6 +1041,8 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -991,12 +1051,14 @@ public class Backend {
 
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut els tipus de locals de la base de dades.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -1022,6 +1084,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 					
@@ -1047,6 +1110,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -1055,12 +1119,14 @@ public class Backend {
 			
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
@@ -1087,6 +1153,7 @@ public class Backend {
 						connection = datasource.getConnection();
 					}catch(Exception ex) {
 						us.generateIncidencia(444);
+						ex.printStackTrace();
 						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
 					}
 
@@ -1109,6 +1176,7 @@ public class Backend {
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
+						ex.printStackTrace();
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -1117,12 +1185,14 @@ public class Backend {
 
 		} catch(Exception exception) {
 			us.generateIncidencia(500);
+			exception.printStackTrace();
 			throw new BasicException(500, "No s'ha pogut trobar locals amb el tipus de local introduit.");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException ex) {
 				us.generateIncidencia(500);
+				ex.printStackTrace();
 				throw new BasicException(500,ex.toString());
 			}
 		}
