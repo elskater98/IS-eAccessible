@@ -3,7 +3,6 @@
 	<name>eAccessibleFrontEnd</name>
 	<comment></comment>
 	<projects>
-		<project>eAccessibleFrontEndWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

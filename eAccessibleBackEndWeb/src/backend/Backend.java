@@ -117,6 +117,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet res = state.executeQuery(query);
+						us.generateIncidencia(200);
 						res.next();
 						
 						local.setCodiLocal(res.getInt("codiLocal"));
@@ -182,6 +183,7 @@ public class Backend {
 						Statement state = connection.createStatement();
 						state.executeUpdate(query2); // Elimina el full d'accessibilitat, ja que conte una clau forana, per tal de poder eliminar el local correctament.	
 						state.executeUpdate(query);
+						us.generateIncidencia(200);
 						state.close();
 					}catch(Exception ex) {
 						ex.printStackTrace();
@@ -245,7 +247,8 @@ public class Backend {
 					
 					try {
 						Statement state = connection.createStatement();
-						state.executeUpdate(query);	
+						state.executeUpdate(query);
+						us.generateIncidencia(200);
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
@@ -293,6 +296,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						state.executeUpdate(query);	
+						us.generateIncidencia(200);
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
@@ -348,7 +352,9 @@ public class Backend {
 					
 					try {
 						Statement state = connection.createStatement();
-						state.executeUpdate(query);	
+						state.executeUpdate(query);
+						us.generateIncidencia(200);
+						us.generateIncidencia(201);
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);
@@ -400,6 +406,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet res = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(res.next()) {
 							Accessibilitat accessibilitat = new Accessibilitat();
 							accessibilitat.setCodiAccessibilitat(res.getInt("codiaccessibilitat"));
@@ -461,6 +468,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Local local = new Local();
 							local.setCoditipoLocal(rs.getInt("coditipoLocal"));
@@ -526,6 +534,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						rs.next();
 						caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
 						caracteristica.setNomCaracteristicaCA(rs.getString("nomcaracteristicaca"));
@@ -584,6 +593,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Caracteristica caracteristica = new Caracteristica();
 							caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
@@ -645,6 +655,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Local l = new Local();
 							l.setCoditipoLocal(rs.getInt("coditipolocal"));
@@ -711,6 +722,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							
 							tl.setCodiTipoLocal(rs.getInt("coditipolocal"));
@@ -770,6 +782,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Local local = new Local();
 							local.setCoditipoLocal(rs.getInt("coditipoLocal"));
@@ -785,6 +798,7 @@ public class Backend {
 						}
 						state.close();
 					}catch(Exception ex) {
+						us.generateIncidencia(500);
 						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
 					}
 					connection.close();
@@ -835,6 +849,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							tl.setCodiTipoLocal(rs.getInt("coditipolocal"));
 							tl.setNomTipoLocalCA(rs.getString("nomtipolocalca"));
@@ -893,6 +908,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Local local = new Local();
 							local.setCoditipoLocal(rs.getInt("coditipolocal"));
@@ -956,6 +972,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							TipoLocal tipusLocal = new TipoLocal();
 							tipusLocal.setCodiTipoLocal(rs.getInt("coditipolocal"));
@@ -1013,6 +1030,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Local local = new Local();
 							local.setCoditipoLocal(rs.getInt("coditipoLocal"));
@@ -1077,6 +1095,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						ResultSet rs = state.executeQuery(query);
+						us.generateIncidencia(200);
 						while(rs.next()) {
 							Caracteristica caracteristica = new Caracteristica();
 							caracteristica.setCodiCaracteristica(rs.getInt("codicaracteristica"));;
