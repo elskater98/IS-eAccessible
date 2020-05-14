@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form method="post" action="sAltaLocal">
+<form method=post action="sAltaLocal">
 <h3>Afegir un nou local</h1>
 <div>
 <label><b>Nom Local</b></label>
