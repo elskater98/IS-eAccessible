@@ -6,6 +6,7 @@ import models.CaracteristicaTipoLocal;
 import models.Incidencia;
 import models.Local;
 import models.TipoLocal;
+import models.TipusIncidencia;
 import utils.UtilService;
 
 import java.util.ArrayList;
@@ -1208,6 +1209,7 @@ public class Backend {
 		return caracteristicaList;
 	}
 	
+	@WebMethod
 	public List<Incidencia> getAllIncidencia() throws BasicException{
 		List<Incidencia> incidencia = new ArrayList<Incidencia>();
 		Connection connection = null;
@@ -1241,6 +1243,63 @@ public class Backend {
 							in.setDataHora(rs.getString("dataHora"));
 							incidencia.add(in);
 						}
+						state.close();
+					}catch(Exception ex) {
+						
+						ex.printStackTrace();
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			
+			exception.printStackTrace();
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				
+				ex.printStackTrace();
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return incidencia;
+	}
+	
+	@WebMethod
+	public TipusIncidencia getTipusIncidencia(Integer codi) throws BasicException{
+		TipusIncidencia incidencia = new TipusIncidencia();
+		Connection connection = null;
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/incidencia");
+				if(datasource == null) {
+					
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						
+						ex.printStackTrace();
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "SELECT \"codiTipusIncidencia\", descripcio FROM log.\"tipusIncidencia\" where \"codiTipusIncidencia\"="+codi;
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						rs.next();
+						incidencia.setCodiTipusIncidencia(rs.getInt("codiTipusIncidencia"));
+						incidencia.setDescripcio(rs.getString("descripcio"));
+						
 						state.close();
 					}catch(Exception ex) {
 						
