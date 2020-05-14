@@ -1235,11 +1235,10 @@ public class Backend {
 						ResultSet rs = state.executeQuery(query);
 						while(rs.next()) {
 							Incidencia in = new Incidencia();
-							in.setCodiIncidencia(rs.getInt("codiIncidencia"));
+							in.setCodiIncidencia(rs.getInt("idIncidencia"));
 							in.setCodiTipusIncidencia(rs.getInt("codiTipusIncidencia"));
 							in.setData(rs.getString("data"));
 							in.setDataHora(rs.getString("dataHora"));
-			
 							incidencia.add(in);
 						}
 						state.close();

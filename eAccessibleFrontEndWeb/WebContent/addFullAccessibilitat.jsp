@@ -12,7 +12,7 @@
 <form method="post" action="sAddFullAccessibilitat">
  
  <%
-backend.Local local = null;
+ backend.Local local = null;
  Caracteristica[] ca = null;
  try {
          backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();

@@ -104,6 +104,12 @@ public class BackendProxy implements backend.Backend {
     return backend.getAccessibilitatByLocalId(arg0);
   }
   
+  public backend.Incidencia[] getAllIncidencia() throws java.rmi.RemoteException, backend.BasicException{
+    if (backend == null)
+      _initBackendProxy();
+    return backend.getAllIncidencia();
+  }
+  
   public backend.Caracteristica getCharacteristic(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException{
     if (backend == null)
       _initBackendProxy();

@@ -18,6 +18,7 @@ public interface Backend extends java.rmi.Remote {
     public backend.Caracteristica[] getCaracterisitcaTipus(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException, backend.Exception;
     public backend.Local getLocal(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException;
     public backend.Accessibilitat[] getAccessibilitatByLocalId(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException, backend.Exception;
+    public backend.Incidencia[] getAllIncidencia() throws java.rmi.RemoteException, backend.BasicException;
     public backend.Caracteristica getCharacteristic(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException;
     public backend.Local[] getLocalsByName(java.lang.String arg0) throws java.rmi.RemoteException, backend.BasicException, backend.Exception;
     public backend.Local[] getAllLocalsNonVerificated() throws java.rmi.RemoteException, backend.BasicException;

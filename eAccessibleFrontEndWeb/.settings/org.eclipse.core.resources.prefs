@@ -7,5 +7,6 @@ encoding//src/backend/BackendServiceSoapBindingStub.java=UTF-8
 encoding//src/backend/BasicException.java=UTF-8
 encoding//src/backend/Caracteristica.java=UTF-8
 encoding//src/backend/Exception.java=UTF-8
+encoding//src/backend/Incidencia.java=UTF-8
 encoding//src/backend/Local.java=UTF-8
 encoding//src/backend/TipoLocal.java=UTF-8
