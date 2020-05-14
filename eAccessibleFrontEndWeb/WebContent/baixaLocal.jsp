@@ -23,12 +23,13 @@ backend.Local local = null;
 %>
 
 <div>
-<h1>Estas segur que vol donar de baixa el local?</h1>
- <select name="codiLocal"> 
+<h1>Estas segur que vol donar de baixa al local " <%=local.getNomLocal()%>"?</h1>
+ <select hidden="true" name="codiLocal"> 
     <option value="<%=local.getCodiLocal()%>"> <%=local.getNomLocal()%> -- <%=local.getNomVia()%> <%=local.getNomCarrer()%></option>
 </select>
  </div>
  
+ <a style="margin-right: 1%" href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detall del local</a>
  <button type="submit">Donar Baixa</button>
  
  

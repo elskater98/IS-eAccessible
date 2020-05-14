@@ -23,22 +23,26 @@ backend.Local local = null;
 %>
 
 <div>
-<h1>Estas segur que vol verificar el local <%=local.getNomLocal()%> ?</h1>
- <select name="codiLocal"> 
+<h1>Estas segur que vol verificar el local "<%=local.getNomLocal()%>" ?</h1>
+ 
+ <select hidden="true" name="codiLocal"> 
     <option value="<%=local.getCodiLocal()%>"> <%=local.getNomLocal()%> -- <%=local.getNomVia()%> <%=local.getNomCarrer()%></option>
 </select>
- </div>
+</div>
  
  <div>
+ <label><b>Verificat:</b></label>
  <select name="verificat"> 
     <option value="S">Si</option>
     <option value="N">No</option>
 </select>
+<button type="submit">Verificar</button>
  </div>
  
- 
- 
- <button type="submit">Verificar</button>
+ <div style="margin-top: 1%">
+ 	<a  href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detall del local</a>
+ </div>
+
  
  
 </form>

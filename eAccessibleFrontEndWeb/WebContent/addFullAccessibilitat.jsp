@@ -25,12 +25,13 @@
         ex.printStackTrace();
     }
 %>
-<select name="codiLocal">
+<h1>Incloure noves caracteristiques a "<%=local.getNomLocal()%>"</h1>
+<select hidden="true" name="codiLocal">
 <option value="<%=local.getCodiLocal()%>"><%=local.getNomLocal()%></option>
 </select>
  
   <div>
- <label>Caracterisitca</label>
+ <label><b>Caracterisitca</b> </label>
  <select name="codiCaracteristica">
 <%for (int i=0; i<ca.length; i++){%>
     <option value="<%=ca[i].getCodiCaracteristica()%>"> <%=ca[i].getNomCaracteristicaCA()%></option>
@@ -39,18 +40,23 @@
  </div>
  
 <div>
+ <label><b>Valor:</b> </label>
 <input type="number" value=0 min=0 max=5 name="valor">
 </div>
 
 <div>
+ <label><b>Verficat:</b> </label>
 <select name="verificat">
 <option value="N">NO</option>
 <option value="S">SI</option>
 </select>
 
 </div>
-	<a href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detail</a>
-	<button type="submit">Add Caracteristica</button>
+<div style="margin-top:1%">
+<a href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detall del local</a>
+	<button style="margin-left: 1%" button type="submit">Incloure caracteristica</button>
+</div>
+	
 </form>
 </body>
 </html>

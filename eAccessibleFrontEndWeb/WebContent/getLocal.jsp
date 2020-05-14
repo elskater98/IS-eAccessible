@@ -35,8 +35,6 @@
 </div>
 
 
-
-
 <div>
 <a style="margin-right: 1%" href="/eAccessibleFrontEndWeb/getAllLocals.jsp">Tots els locals</a>
 <a style="margin-right: 1%" href="/eAccessibleFrontEndWeb/jAddFullAccessibilitat?codiLocal=<%=local.getCodiLocal()%>">Incloure Caracterisitques</a>
