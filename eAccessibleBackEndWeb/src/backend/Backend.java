@@ -3,6 +3,7 @@ package backend;
 import models.Accessibilitat;
 import models.Caracteristica;
 import models.CaracteristicaTipoLocal;
+import models.Incidencia;
 import models.Local;
 import models.TipoLocal;
 import utils.UtilService;
@@ -468,6 +469,7 @@ public class Backend {
 		return fullAccessibilitat;
 		
 	}
+	
 	@WebMethod
 	public List<Local> getAllLocals() throws BasicException{
 		List<Local> locals = new ArrayList<Local>();
@@ -1205,5 +1207,67 @@ public class Backend {
 
 		return caracteristicaList;
 	}
+	
+	public List<Incidencia> getAllIncidencia() throws BasicException{
+		List<Incidencia> incidencia = new ArrayList<Incidencia>();
+		Connection connection = null;
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context != null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/incidencia");
+				if(datasource == null) {
+					
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						
+						ex.printStackTrace();
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query = "SELECT * FROM log.incidencia";
+					
+					try {
+						Statement state = connection.createStatement();
+						ResultSet rs = state.executeQuery(query);
+						while(rs.next()) {
+							Incidencia in = new Incidencia();
+							in.setCodiIncidencia(rs.getInt("codiIncidencia"));
+							in.setCodiTipusIncidencia(rs.getInt("codiTipusIncidencia"));
+							in.setData(rs.getString("data"));
+							in.setDataHora(rs.getString("dataHora"));
+			
+							incidencia.add(in);
+						}
+						state.close();
+					}catch(Exception ex) {
+						
+						ex.printStackTrace();
+						throw new BasicException(500,"No s'ha pogut crear un Statement o error en la query. SQL exception");
+					}
+					connection.close();
+				}
+			}
+			
+		} catch(Exception exception) {
+			
+			exception.printStackTrace();
+			throw new BasicException(500, "No s'ha pogut trobar locals amb el nom de local introduit.");
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				
+				ex.printStackTrace();
+				throw new BasicException(500,ex.toString());
+			}
+		}
+		
+		return incidencia;
+	}
+	
 	
 }

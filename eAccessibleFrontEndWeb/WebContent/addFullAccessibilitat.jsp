@@ -39,7 +39,7 @@ backend.Local local = null;
  </div>
  
 <div>
-<input type="number" min=0 max=5 name="valor">
+<input type="number" value=0 min=0 max=5 name="valor">
 </div>
 
 <div>

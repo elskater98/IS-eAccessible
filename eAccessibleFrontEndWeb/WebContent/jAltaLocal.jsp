@@ -56,12 +56,12 @@
  
  <div>
  <label>codiCarrer</label>
-  <input type="number" min=1 name="codiCarrer">
+  <input type="number" value="1" min=1 name="codiCarrer">
  </div>
  
   <div>
   <label>numero</label>
-  <input type="number" min=1 name="numero">
+  <input type="number" value="1" min=1 name="numero">
  </div>
  
  <div>
