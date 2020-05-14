@@ -158,5 +158,11 @@ public class BackendProxy implements backend.Backend {
     backend.altaLocal(arg0);
   }
   
+  public backend.TipusIncidencia getTipusIncidencia(java.lang.Integer arg0) throws java.rmi.RemoteException, backend.BasicException{
+    if (backend == null)
+      _initBackendProxy();
+    return backend.getTipusIncidencia(arg0);
+  }
+  
   
 }

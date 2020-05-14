@@ -9,9 +9,10 @@
 <body>
 
 <form method="post" action="sAltaLocal">
+<h3>Afegir un nou local</h1>
 <div>
 <label>nomLocal</label>
-<input type="text" name="nomLocal">
+<input type="text" value="" name="nomLocal">
 </div>
  <div>
  <label>nomVia</label>
@@ -27,10 +28,8 @@
  
  <div>
  <label>nomCarrer</label>
- <input type="text" name="nomCarrer">
+ <input type="text" value="" name="nomCarrer">
  </div>
- 
-
  
  <%
  backend.TipoLocal[] tipoLocal = null;
@@ -66,10 +65,10 @@
  
  <div>
  <label>observacions</label>
-  <textarea type="text" maxLength=300 name="observacions"></textarea>
+  <textarea type="text" value="" maxLength=300 name="observacions"></textarea>
  </div>
 
-<button type="submit">Submit</button>
+<button type="submit">Enviar formulari</button>
 </form>
 
 </body>
