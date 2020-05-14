@@ -190,6 +190,7 @@ public class Backend {
 					try {
 						Statement state = connection.createStatement();
 						state.executeUpdate(query2); // Elimina el full d'accessibilitat, ja que conte una clau forana, per tal de poder eliminar el local correctament.	
+						us.generateIncidencia(200);
 						state.executeUpdate(query);
 						us.generateIncidencia(200);
 						state.close();
@@ -217,6 +218,7 @@ public class Backend {
 		}
 	}
 	
+	//Sense us
 	@WebMethod
 	public void UpdateLocal(Local local) throws Exception,BasicException {
 		
@@ -599,6 +601,7 @@ public class Backend {
 		return caracteristica;
 	}
 	
+	//Sense us
 	@WebMethod
 	public List<Caracteristica> getAllCharacteristic() throws BasicException{
 		List<Caracteristica> characteristics = new ArrayList<Caracteristica>();
@@ -664,7 +667,7 @@ public class Backend {
 		return characteristics;
 	}
 
-
+	//Sense us
 	public List<Local> getLocalsbyTipusAndName(Integer codiTipoLocal, String nomLocal) throws BasicException{
 		List<Local> local = new ArrayList<Local>();
 		Connection connection = null;
@@ -733,7 +736,7 @@ public class Backend {
 		return local;
 	}
 	
-	
+	//Sense us
 	@WebMethod
 	public TipoLocal getTipusLocalById(Integer codiTipoLocal) throws BasicException{
 		TipoLocal tl = new TipoLocal();
@@ -799,6 +802,7 @@ public class Backend {
 		return tl;
 	}
 	
+	//Sense us
 	@WebMethod
 	public List<Local> getLocalsByName(String nomLocal) throws Exception, BasicException {
 		
@@ -868,7 +872,7 @@ public class Backend {
 		return locals;
 	}
 	
-	
+	//Sense us
 	@WebMethod
 	public TipoLocal getTipusLocalByCodiLocal(Integer codiLocal) throws Exception, BasicException {
 		
@@ -932,7 +936,7 @@ public class Backend {
 		return tl;
 	}
 	
-	
+	//Sense us
 	@WebMethod
 	public List<Local> getLocalsByCodiTipusLocal(Integer codiTipusLocal) throws Exception, BasicException {
 		
@@ -1002,7 +1006,7 @@ public class Backend {
 		return locals;
 	}
 
-	
+	//Sense us
 	@WebMethod
 	public List<TipoLocal> getAllTipusLocal() throws Exception, BasicException {
 		
@@ -1067,6 +1071,7 @@ public class Backend {
 		return tipusLocals;
 	}
 	
+	//Sense us
 	@WebMethod
 	public List<Local> getAllLocalsNonVerificated() throws BasicException{
 		List<Local> locals = new ArrayList<Local>();
