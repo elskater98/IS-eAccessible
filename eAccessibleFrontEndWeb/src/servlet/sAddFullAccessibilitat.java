@@ -53,22 +53,36 @@ public class sAddFullAccessibilitat extends HttpServlet {
 	        HttpSession session= request.getSession(true);
 
 	        
-	        Integer codiLocal = Integer.parseInt(request.getParameter("codiLocal"));
-	        Integer codiCaracteristica = Integer.parseInt(request.getParameter("codiCaracteristica"));
-	        Integer valor = Integer.parseInt(request.getParameter("valor"));
-	        String verificat = request.getParameter("verificat");
-	        
-	        Accessibilitat ac = new Accessibilitat();
-	        ac.setCodiLocal(codiLocal);
-	        ac.setCodiCaracterisitca(codiCaracteristica);
-	        ac.setValor(valor);
-	        ac.setVerificat(verificat);
-
-
+	        Integer len=0;
+	        Integer codiTipoLocal = 0;
+	        Caracteristica [] ca = null;
 	        try {
 	            backend.BackendServiceLocator serviceLocator = new BackendServiceLocator();
 	            backend.Backend port = serviceLocator.getBackendPort();
-	            port.addAccessibilitat(ac);
+	            
+	            codiTipoLocal = port.getLocal(Integer.parseInt(request.getParameter("codiLocal"))).getCoditipoLocal();
+	            ca = port.getCaracterisitcaTipus(codiTipoLocal);
+	            
+	            for(int i=0; i<ca.length;i++) {
+	            	try {
+	            		Integer codiLocal = Integer.parseInt(request.getParameter("codiLocal"));
+	        	        Integer codiCaracteristica = Integer.parseInt(request.getParameter("caracterisitca_"+i));
+	        	        Integer valor = Integer.parseInt(request.getParameter("valor_"+i));
+	        	        String verificat = request.getParameter("verificat_"+i);
+	        	        
+	        	        Accessibilitat ac = new Accessibilitat();
+	        	        ac.setCodiLocal(codiLocal);
+	        	        ac.setCodiCaracterisitca(codiCaracteristica);
+	        	        ac.setValor(valor);
+	        	        ac.setVerificat(verificat);
+	        	        
+	        	        port.addAccessibilitat(ac);
+	            	}catch(Exception e) {
+	    	            e.printStackTrace();
+	    	        }
+	            }
+	            
+	            
 
 	        }catch(Exception e) {
 	            e.printStackTrace();

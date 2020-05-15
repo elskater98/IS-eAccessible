@@ -32,26 +32,32 @@
  
   <div>
  <label><b>Caracterisitca</b> </label>
- <select name="codiCaracteristica">
+ <!-- 
+<select name="codiCaracteristica">
 <%for (int i=0; i<ca.length; i++){%>
     <option value="<%=ca[i].getCodiCaracteristica()%>"> <%=ca[i].getNomCaracteristicaCA()%></option>
-<%} %>
+<%} %> 
 </select>
- </div>
- 
-<div>
- <label><b>Valor:</b> </label>
-<input type="number" value=0 min=0 max=5 name="valor">
-</div>
+-->
 
+<%for (int i=0; i<ca.length; i++){%>
 <div>
+<input name="caracterisitca_<%=i%>" type="checkbox" id="cbox" value="<%=ca[i].getCodiCaracteristica()%>"><%=ca[i].getNomCaracteristicaCA()%>
+ <label><b>Valor:</b> </label>
+<input type="number" value=0 min=0 max=5 name="valor_<%=i%>">
+
  <label><b>Verficat:</b> </label>
-<select name="verificat">
+<select name="verificat_<%=i%>">
 <option value="N">NO</option>
 <option value="S">SI</option>
 </select>
-
 </div>
+
+<%} %>
+
+ </div>
+ 
+
 <div style="margin-top:1%">
 <a href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detall del local</a>
 	<button style="margin-left: 1%" button type="submit">Incloure caracteristica</button>

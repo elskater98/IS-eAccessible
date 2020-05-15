@@ -739,7 +739,7 @@ public class Backend {
 		return local;
 	}
 	
-	//Sense us
+	
 	@WebMethod
 	public TipoLocal getTipusLocalById(Integer codiTipoLocal) throws BasicException{
 		TipoLocal tl = new TipoLocal();
