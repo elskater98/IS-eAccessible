@@ -24,6 +24,7 @@
 <h1 style="color: red"><%=request.getParameter("error")%></h1>
 <a href="index.html">Inici</a>
 <a style="margin-left: 1%" href="jGetLocal?codiLocal=<%=local.getCodiLocal()%>">Detall del local</a>
+<a style="margin-left: 1%" href="/eAccessibleFrontEndWeb/jAddFullAccessibilitat?codiLocal=<%=local.getCodiLocal()%>">Incloure Caracterisitques</a>
 
 </body>
 </html>

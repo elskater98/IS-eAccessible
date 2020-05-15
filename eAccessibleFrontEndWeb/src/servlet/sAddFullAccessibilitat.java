@@ -62,6 +62,8 @@ public class sAddFullAccessibilitat extends HttpServlet {
 	            
 	            codiTipoLocal = port.getLocal(Integer.parseInt(request.getParameter("codiLocal"))).getCoditipoLocal();
 	            ca = port.getCaracterisitcaTipus(codiTipoLocal);
+	            port.deleteFullAccessibilitat(Integer.parseInt(request.getParameter("codiLocal")));
+	            
 	            
 	            for(int i=0; i<ca.length;i++) {
 	            	try {

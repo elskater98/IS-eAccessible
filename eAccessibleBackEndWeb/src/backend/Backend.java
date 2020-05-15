@@ -370,12 +370,64 @@ public class Backend {
 
 					
 					String query="INSERT INTO eaccessible.accessibilitat (codiaccessibilitat, codilocal, codicaracteristica, valor, verificat) VALUES ("+codiAccessibilitat+","+codiLocal+","+codiCaracteristica+","+valor+",'"+verificat+"');";
-					
 					try {
 						Statement state = connection.createStatement();
 						state.executeUpdate(query);
 						us.generateIncidencia(200);
 						us.generateIncidencia(201);
+						state.close();
+					}catch(Exception ex) {
+						us.generateIncidencia(500);
+						ex.printStackTrace();
+						throw new BasicException(500,"No s'ha pogut crear un Statement.");
+					}
+					connection.close();
+				}
+			}
+			
+		}catch(Exception exception) {
+			us.generateIncidencia(500);
+			exception.printStackTrace();
+			throw new BasicException(500, "S'ha produit un error en la Base de dades. Accessibilitat");
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				us.generateIncidencia(500);
+				ex.printStackTrace();
+				throw new BasicException(500,ex.toString());
+			}
+		}
+	}
+	
+	@WebMethod
+	public void deleteFullAccessibilitat(Integer codiLocal) throws Exception, BasicException {
+		Connection connection = null;
+		
+		UtilService us = new UtilService();
+		
+		try {
+			InitialContext context = new InitialContext();
+			if(context !=null) {
+				DataSource datasource = (DataSource) context.lookup( "java:jboss/PostgreSQL/eAccessible");
+				if(datasource == null) {
+					us.generateIncidencia(500);
+					throw new BasicException(500,"No s'ha pogut establir un DataSource/Lookup.");
+				}else {
+					try {
+						connection = datasource.getConnection();
+					}catch(Exception ex) {
+						us.generateIncidencia(444);
+						ex.printStackTrace();
+						throw new BasicException(444,"No s'ha pogut establir connexio amb la base de dades.");
+					}
+					
+					String query="DELETE FROM eaccessible.accessibilitat WHERE codiLocal="+ codiLocal;
+					try {
+						Statement state = connection.createStatement();
+						state.executeUpdate(query);
+						us.generateIncidencia(200);
 						state.close();
 					}catch(Exception ex) {
 						us.generateIncidencia(500);

@@ -32,13 +32,6 @@
  
   <div>
  <label><b>Caracterisitca</b> </label>
- <!-- 
-<select name="codiCaracteristica">
-<%for (int i=0; i<ca.length; i++){%>
-    <option value="<%=ca[i].getCodiCaracteristica()%>"> <%=ca[i].getNomCaracteristicaCA()%></option>
-<%} %> 
-</select>
--->
 
 <%for (int i=0; i<ca.length; i++){%>
 <div>
