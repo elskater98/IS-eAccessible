@@ -90,7 +90,7 @@ public class sAddFullAccessibilitat extends HttpServlet {
 
 	        try {
 	            ServletContext context = getServletContext();
-	            RequestDispatcher rd = context.getRequestDispatcher("/jAddFullAccessibilitat");
+	            RequestDispatcher rd = context.getRequestDispatcher("/jviewfullAccessibilitat?codiLocal="+Integer.parseInt(request.getParameter("codiLocal")));
 	            rd.forward(request, response);
 
 	        }catch(Exception e) {
