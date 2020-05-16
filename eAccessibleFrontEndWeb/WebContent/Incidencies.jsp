@@ -34,7 +34,7 @@ Incidencia [] in = null;
          backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
          backend.Backend port = serviceLocator.getBackendPort();
          in=port.getAllIncidencia();
-		
+
     }catch(Exception ex) {
         ex.printStackTrace();
     }
@@ -53,15 +53,15 @@ Incidencia [] in = null;
   </tr>
 
 <%for (int i=0; i<in.length; i++){
-	String res="";
-	  try {
-	          backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
-	          backend.Backend port = serviceLocator.getBackendPort();
-	          res=port.getTipusIncidencia(in[i].getCodiTipusIncidencia()).getDescripcio();
-	 		
-	     }catch(Exception ex) {
-	         ex.printStackTrace();
-	     }
+    String res="";
+      try {
+              backend.BackendServiceLocator serviceLocator = new backend.BackendServiceLocator();
+              backend.Backend port = serviceLocator.getBackendPort();
+              res=port.getTipusIncidencia(in[i].getCodiTipusIncidencia()).getDescripcio();
+
+         }catch(Exception ex) {
+             ex.printStackTrace();
+         }
 %>
 <tr>
 <td><%=in[i].getCodiIncidencia()%></td> 
